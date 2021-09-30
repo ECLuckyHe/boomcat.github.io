@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>
-      Test
+        Test
     </title>
-  </head>
-  <body>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js" /></script>
     <h1>Hello World!</h1>
+    <div id="app" v-cloak>
+        <h2>WelcomeMsg: {{info.welcomeMsg}}</h2>
+        <h2>AboutMsg: {{info.aboutMsg}}</h2>
+    </div>
     <h2>This is a test website.</h2>
     <h2>这是一个测试页面。</h2>
     <h2>このウェブサイトはテストのため。</h2>
@@ -16,5 +29,25 @@
     <h4>This is a test website.</h4>
     <h4>这是一个测试页面。</h4>
     <h4>このウェブサイトはテストのため。</h4>
-  </body>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    info: {
+                        aboutMsg: null,
+                        welcomeMsg: null,
+                        code: null
+                    }
+                }
+            },
+            mounted() {
+                axios.get("http://119.23.43.199:8080/info/getWelcome")
+                    .then(response => (this.info = response.data));
+            }
+        });
+    </script>
+</body>
+
 </html>
